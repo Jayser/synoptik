@@ -1,6 +1,7 @@
-import TestComponent from './components/test-component/index';
-import template from './components/test-component/templates/test.hbs';
+'use strict';
 
-new TestComponent();
+import PlaceAutocomplete from './components/place-autocomplete/place-autocomplete';
 
-console.log(template({name: 'sarhan'}));
+new PlaceAutocomplete({
+    el: '.main-content'
+});
