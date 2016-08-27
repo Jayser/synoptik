@@ -1,7 +1,5 @@
 'use strict';
 
-import PlaceAutocomplete from './components/place-autocomplete/place-autocomplete';
+import PlaceAutoComplete from './components/place-autocomplete/place-autocomplete';
 
-new PlaceAutocomplete({
-    el: '.main-content'
-});
+new PlaceAutoComplete({ el: '.main-content' });

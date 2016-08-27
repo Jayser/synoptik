@@ -1,17 +1,20 @@
 'use strict';
 
-import './styles/place-autocomplete.scss';
-
-import Backbone from 'backbone';
-import Model from './js/place-autocomplete-model';
-import template from './templates/place-autocomplete.hbs';
 import 'jquery';
+import Backbone from 'backbone';
+
+import './styles/place-autocomplete.scss';
+import template from './templates/place-autocomplete.hbs';
+
+import geoLocationModel from '../../models/geolocation';
+import WeatherList from '../weather-list/weather-list';
 
 const GET_JS_DOM_OBJECT = 0;
 const GOOGLE_API_PLACE_CHANGED = "place_changed";
 
 export default Backbone.View.extend({
-    model: new Model,
+    weather: new WeatherList(),
+    model: geoLocationModel,
 
     initialize() {
         this.listenTo(this.model, 'sync', this.initPlaceAutocomplete);
