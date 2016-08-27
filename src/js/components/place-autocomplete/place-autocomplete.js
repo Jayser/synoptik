@@ -13,7 +13,7 @@ const GET_JS_DOM_OBJECT = 0;
 const GOOGLE_API_PLACE_CHANGED = "place_changed";
 
 export default Backbone.View.extend({
-    weather: new WeatherList(),
+    weatherList: new WeatherList(),
     model: geoLocationModel,
 
     initialize() {

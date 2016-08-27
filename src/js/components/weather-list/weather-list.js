@@ -7,10 +7,10 @@ import './styles/weather-list.scss';
 import template from './templates/weather-list.hbs';
 
 import geoLocationModel from '../../models/geolocation';
-import WeatherService from '../../models/weather';
+import WeatherModel from '../../models/weather';
 
 export default Backbone.View.extend({
-    model: new WeatherService,
+    model: new WeatherModel,
 
     initialize() {
         this.listenTo(geoLocationModel, 'change', this.fetchWeather);
