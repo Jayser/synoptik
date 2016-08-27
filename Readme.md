@@ -17,6 +17,9 @@ npm start
 * Backbone
 * es6+
 
+### Requirements
+* 480*680 resolution
+
 ### Authors
 
 * [Azizov Sarhan](https://github.com/Jayser/)
