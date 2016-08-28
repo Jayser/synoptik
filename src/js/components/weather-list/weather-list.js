@@ -6,24 +6,21 @@ import Backbone from 'backbone';
 import './styles/weather-list.scss';
 import template from './templates/weather-list.hbs';
 
-import geoLocationModel from '../../models/geolocation';
-import WeatherModel from '../../models/weather';
+import weatherStorageService from '../../services/weather-storage';
 
 export default Backbone.View.extend({
-    model: new WeatherModel,
-
     initialize() {
-        this.listenTo(geoLocationModel, 'change', this.fetchWeather);
-        this.listenTo(this.model, 'sync', this.render);
+        this.listenTo(weatherStorageService, 'sync', this.handlerWeather);
+        this.render();
     },
 
-    fetchWeather(model) {
-        const {lat, lng} = model.toJSON();
-        this.model.fetch({url: this.model.url() + `${lat},${lng}`});
-    },
-
-    render(data) {
+    handlerWeather(model) {
         // TODO: temporary for see the results
-        console.log(data.toJSON());
+        console.log('Add new weather ::', model.toJSON());
+    },
+
+    render() {
+        // TODO: temporary for see the results
+        console.log('Pre populate ::', weatherStorageService.localStorage.findAll());
     }
 });

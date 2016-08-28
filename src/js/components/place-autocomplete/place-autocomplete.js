@@ -6,37 +6,52 @@ import Backbone from 'backbone';
 import './styles/place-autocomplete.scss';
 import template from './templates/place-autocomplete.hbs';
 
-import geoLocationModel from '../../models/geolocation';
-import WeatherList from '../weather-list/weather-list';
+import googlePlaceAutoCompleteService from '../../services/google-place-auto-complete';
+import weatherService from '../../services/weather';
+import weatherStorageService from '../../services/weather-storage';
 
 const GET_JS_DOM_OBJECT = 0;
 const GOOGLE_API_PLACE_CHANGED = "place_changed";
 
 export default Backbone.View.extend({
-    weatherList: new WeatherList(),
-    model: geoLocationModel,
+    selectors: {
+        autoComplete: '#google-place-auto-complete'
+    },
 
     initialize() {
-        this.listenTo(this.model, 'sync', this.initPlaceAutocomplete);
-        this.model.fetch();
+        this.addListeners();
         this.render();
+        googlePlaceAutoCompleteService.fetch();
     },
 
-    selectors: {
-        placeAutocomplete: '#place-autocomplete'
+    addListeners(){
+        this.listenTo(googlePlaceAutoCompleteService, 'sync', this.initPlaceAutoComplete);
+        this.listenTo(weatherService, 'sync', this.handlerWeather);
     },
 
-    initPlaceAutocomplete() {
-        const placeAutocomplete = this.$(this.selectors.placeAutocomplete).get(GET_JS_DOM_OBJECT);
-        this.autocomplete = new google.maps.places.Autocomplete(placeAutocomplete);
+    initPlaceAutoComplete() {
+        const placeAutoComplete = this.$(this.selectors.autoComplete).get(GET_JS_DOM_OBJECT);
+        this.autocomplete = new google.maps.places.Autocomplete(placeAutoComplete);
         this.autocomplete.addListener(GOOGLE_API_PLACE_CHANGED, () => this.handlerLocation());
     },
 
+    fetchWeather(url, {lat, lng}) {
+        weatherService.fetch({url: `${url}${lat},${lng}`});
+    },
+
     handlerLocation() {
-        this.model.set(this.model.parsing(this.autocomplete.getPlace()));
+        const geoLocationData = googlePlaceAutoCompleteService.parsing(this.autocomplete.getPlace());
+        this.fetchWeather(weatherService.url(), geoLocationData);
 
         // TODO: temporary for see the results
-        console.log(this.model.toJSON());
+        console.log('Geo location API return ::', geoLocationData);
+    },
+
+    handlerWeather(data) {
+        // TODO: temporary for see the results
+        console.log('Weather API return ::', data.toJSON());
+
+        weatherStorageService.create(data.toJSON());
     },
 
     render() {

@@ -4,7 +4,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 
-export default Backbone.Model.extend({
+const Weather = Backbone.Model.extend({
     url() {
         return 'https://api.forecast.io/forecast/e6b2ec46c1a1424d28fd7606c38272c6/'
     },
@@ -20,3 +20,5 @@ export default Backbone.Model.extend({
         return $.ajax(params);
     }
 });
+
+export default new Weather();
