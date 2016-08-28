@@ -33,7 +33,15 @@ module.exports = {
             {
                 test: /\.scss/,
                 include: /src/,
-                loader: ExtractTextPlugin.extract("style", "css?sourceMap", "sass?sourceMap")
+                loader: ExtractTextPlugin.extract("style", ["css?sourceMap", "sass?sourceMap"])
+            },
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name].[ext]"
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file-loader?name=fonts/[name].[ext]"
             }
         ]
     },
@@ -41,7 +49,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['build'], {root: __dirname}),
         new CopyWebPackPlugin([{from: 'src/index.html'}]),
-        new ExtractTextPlugin("css/main.css")
+        new ExtractTextPlugin("main.css")
     ],
     devServer: {
         port: 3001,
