@@ -26,7 +26,7 @@ export default Backbone.View.extend({
 
     addListeners(){
         this.listenTo(googlePlaceAutoCompleteService, 'sync', this.initPlaceAutoComplete);
-        this.listenTo(weatherService, 'sync', this.handlerWeather);
+        this.listenTo(weatherService, 'sync', this.saveWeatherToStorage);
     },
 
     initPlaceAutoComplete() {
@@ -47,11 +47,12 @@ export default Backbone.View.extend({
         console.log('Geo location API return ::', geoLocationData);
     },
 
-    handlerWeather(data) {
+    saveWeatherToStorage(model) {
         // TODO: temporary for see the results
-        console.log('Weather API return ::', data.toJSON());
+        console.log('Weather API ::', model.toJSON());
 
-        weatherStorageService.create(data.toJSON());
+        weatherStorageService.localStorage.create(model);
+        weatherStorageService.fetch();
     },
 
     render() {

@@ -11,16 +11,11 @@ import weatherStorageService from '../../services/weather-storage';
 export default Backbone.View.extend({
     initialize() {
         this.listenTo(weatherStorageService, 'sync', this.handlerWeather);
-        this.render();
+        weatherStorageService.fetch();
     },
 
     handlerWeather(model) {
         // TODO: temporary for see the results
-        console.log('Add new weather ::', model.toJSON());
-    },
-
-    render() {
-        // TODO: temporary for see the results
-        console.log('Pre populate ::', weatherStorageService.localStorage.findAll());
+        console.log('Pre populate ::', model.toJSON());
     }
 });
