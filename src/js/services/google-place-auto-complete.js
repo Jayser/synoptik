@@ -23,11 +23,12 @@ const Geolocation = Backbone.Model.extend({
         return $.ajax(params);
     },
 
-    parsing({ formatted_address, geometry}) {
+    parsing({ name, formatted_address, geometry}) {
         return {
             lat: geometry.location.lat(),
             lng: geometry.location.lng(),
-            name: formatted_address
+            name: name,
+            fullName: formatted_address
         };
     },
 
