@@ -12,9 +12,10 @@ import WeatherList from '../weather-list/weather-list';
 
 export default Backbone.View.extend({
     el: '.weather-app',
-    weatherList: new WeatherList(),
+
     SkyCons: Skycons(window),
-    skyCons: new (Skycons(window))(),
+    weatherList: new WeatherList(),
+    skyCons: new (Skycons(window))({"color": "deepskyblue"}),
 
     initialize() {
         this.render();
@@ -30,6 +31,10 @@ export default Backbone.View.extend({
 
     // TODO: temporary for see the results
     addIcon() {
+        /*
+         * TODO: 'icon1' it's #id element in DOM
+         * you can the DOM 1element see in templates/weather-app.hbs
+         */
         this.$el.append(this.skyCons.add("icon1", this.SkyCons.PARTLY_CLOUDY_DAY));
         this.skyCons.play();
     },
