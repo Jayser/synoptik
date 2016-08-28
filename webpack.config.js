@@ -12,6 +12,7 @@ module.exports = {
         filename: 'js/[name].js'
     },
     devtool: "eval",
+    watch: true,
     module: {
         preLoaders: [
             {
