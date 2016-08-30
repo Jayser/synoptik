@@ -1,2 +1,60 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
+
+.weather-app {
+  width: 480px;
+  margin: 0 auto;
+  background: #041121;
+  color: #fff;
+  height: 680px;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 2px solid #414a59;
+  }
+
+  .hamburger {
+    padding: 0 5px;
+  }
+
+  .search {
+    width: 100%;
+    margin: 0 5px;
+    $inppadd: 10px;
+
+    #google-place-auto-complete {
+      width: calc(100% - (#{$inppadd} * 2));
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      padding: 3px $inppadd;
+      color: #1d1d1d;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .navigation {
+    order: 3;
+    display: inline-flex;
+
+    &__icon {
+      float: left;
+      padding: 0 5px;
+
+      &-add {
+
+      }
+
+      &-delete {
+
+      }
+    }
+  }
+}
