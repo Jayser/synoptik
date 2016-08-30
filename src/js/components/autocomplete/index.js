@@ -5,5 +5,5 @@ import $ from 'jquery';
 
 let viewAutocomplete = new autocompleteView({
     model: new autocompleteModel(),
-    el: '#pac-input'
+    el: '#main-wrap'
 });
