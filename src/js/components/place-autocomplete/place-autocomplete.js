@@ -1,6 +1,6 @@
 'use strict';
 
-import 'jquery';
+import $ from 'jquery';
 import Backbone from 'backbone';
 
 import './styles/place-autocomplete.scss';
@@ -15,6 +15,7 @@ const GOOGLE_API_PLACE_CHANGED = "place_changed";
 
 export default Backbone.View.extend({
     selectors: {
+        searchInputContainer: '.search',
         autoComplete: '#google-place-auto-complete'
     },
 
@@ -61,6 +62,6 @@ export default Backbone.View.extend({
     },
 
     render() {
-        this.$el.append(template());
+        this.$el.find(this.selectors.searchInputContainer).append(template());
     }
 });

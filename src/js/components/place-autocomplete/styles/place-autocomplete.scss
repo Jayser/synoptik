@@ -1,0 +1,56 @@
+#ham {
+  display: none;
+}
+#ham:checked + label svg path#top,
+#ham:checked + label svg path#bottom {
+  stroke-dashoffset: -130px;
+  stroke-dashoffset: -130px;
+}
+
+#ham:checked + label path#middle {
+  stroke-dashoffset: -23px;
+  stroke-dasharray: 1px 48px;
+}
+svg {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+path {
+  fill: none;
+  -webkit-transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
+  -moz-transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
+  -o-transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
+  -ms-transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
+  stroke-width: 10px;
+  stroke-linecap: round;
+  stroke: #1d1d1d;
+  stroke-dashoffset: 0px;
+}
+path#top,
+path#bottom {
+  stroke-dasharray: 48px 190px;
+}
+path#middle {
+  stroke-dasharray: 48px 48px;
+}
+
+.pac-container {
+  display: block;
+  margin-left: -39px;
+  box-shadow: none;
+  width: 480px !important;
+  height: 638px;
+  top: 50px !important;
+  background: #041121;
+
+  &::after {
+    display: none;
+  }
+}

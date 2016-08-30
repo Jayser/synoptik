@@ -18,6 +18,11 @@ const Weather = Backbone.Model.extend({
         }, options);
 
         return $.ajax(params);
+    },
+
+    parse(data) {
+        data.currently.temperature = parseInt(data.currently.temperature, 10);
+        return data;
     }
 });
 
