@@ -1,12 +1,12 @@
 {{#each this}}
-    <div class="weather-item">
-        <div class="weather-item__icon">
-            <canvas id="{{this.currently.icon}}" width="40" height="40"></canvas>
+    <div class="weather-list__item">
+        <div class="weather-list__item-icon">
+            <canvas id="{{this.icon}}-{{this.time}}" width="40" height="40"></canvas>
         </div>
-        <div class="weather-item__temperature">{{this.currently.temperature}}&deg;</div>
-        <div class="weather-item__info">
-            <div class="weather-item__city">{{this.name}}</div>
-            <div class="weather-item__summary">{{this.currently.summary}}</div>
+        <div class="weather-list__item-temperature">{{this.temperature}}&deg;</div>
+        <div class="weather-list__item-info">
+            <div class="weather-list__item-city">{{this.name}}</div>
+            <div class="weather-list__item-summary">{{this.summary}}</div>
         </div>
     </div>
 {{/each}}

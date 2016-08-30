@@ -11,11 +11,10 @@ import weatherService from '../../services/weather';
 import weatherStorageService from '../../services/weather-storage';
 
 const GET_JS_DOM_OBJECT = 0;
-const GOOGLE_API_PLACE_CHANGED = "place_changed";
+const GOOGLE_API_EVENT_PLACE_CHANGED = "place_changed";
 
 export default Backbone.View.extend({
     selectors: {
-        searchInputContainer: '.search',
         autoComplete: '#google-place-auto-complete'
     },
 
@@ -33,7 +32,7 @@ export default Backbone.View.extend({
     initPlaceAutoComplete() {
         const placeAutoComplete = this.$(this.selectors.autoComplete).get(GET_JS_DOM_OBJECT);
         this.autocomplete = new google.maps.places.Autocomplete(placeAutoComplete);
-        this.autocomplete.addListener(GOOGLE_API_PLACE_CHANGED, () => this.handlerLocation());
+        this.autocomplete.addListener(GOOGLE_API_EVENT_PLACE_CHANGED, () => this.handlerLocation());
     },
 
     fetchWeather(url, {lat, lng}) {
@@ -57,11 +56,12 @@ export default Backbone.View.extend({
             fullName: googleService.get('fullName')
         });
 
-        weatherStorageService.localStorage.create(model);
+        const newWeatherItem = new weatherStorageService.model(model.toJSON());
+        weatherStorageService.localStorage.create(newWeatherItem);
         weatherStorageService.fetch();
     },
 
     render() {
-        this.$el.find(this.selectors.searchInputContainer).append(template());
+        this.$el.html(template());
     }
 });
