@@ -31,6 +31,5 @@ export default Backbone.View.extend({
     },
     render () {
         this.$el.html(template());
-        return this;
     }
 })
