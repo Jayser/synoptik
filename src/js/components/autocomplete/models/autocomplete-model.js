@@ -2,14 +2,10 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 
 export default Backbone.Model.extend({
-    url () {
-        return "https://maps.googleapis.com/maps/api/js?" + this.config();
+    url (place) {
+        return 'https://maps.google.com/maps/api/geocode/json?sensor=false&address=' + place
     },
-    config () {
-        return $.param({
-            key: 'AIzaSyBCOMMeq3NvV2w4XOOBJKkF1ADfVPPhqJk',
-            signed_in: true,
-            libraries: 'places'
-        })
+    getUrl (data) {
+        return this.url(data);
     }
 })
