@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
+import _ from 'underscore';
 import template from '../templates/autocomplete.hbs';
 import modelWeather from '../models/weather-model.js'
 import autocompleteWeather from '../models/autocomplete-model.js'
@@ -11,22 +12,30 @@ export default Backbone.View.extend({
             dataType: 'jsonp'
         })
     },
-    initAutocomplete () {
-        return 'initAutocomplete-sync';
-        // let autocomplete = new google.maps.places.Autocomplete(this.$('#autocomplete-input').get(0));
+    initAutocomplete (data) {
+        let results  = data.toJSON().results;
+        let resultList = ' ';
 
-        // autocomplete.addListener('place_changed', () => {
-        //     const place = autocomplete.getPlace();
-        //     const lat = place.geometry.location.lat();
-        //     const lng = place.geometry.location.lng();
+        if (!results.length) {
+            this.$el.find('.search-list').html('<li>Have no result !!!</li>');
+            return;
+        }
 
-        //     this.getWeather(lat, lng);
-        // });
+        _.each(results, (item) => {
+            resultList += `<li>
+                ${item.formatted_address}
+            </li>`;
+        });
+        this.$el.find('.search-list').html(resultList);
     },
     getCoordinates (e) {
         let val = $(e.currentTarget).val();
+        if (!val) {
+            return;
+        }
         autocompleteWeather.fetch({
-            url: autocompleteWeather.get(val)
+            url: autocompleteWeather.getUrl(val),
+            type: 'GET'
         });
     },
     events: {

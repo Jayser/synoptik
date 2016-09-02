@@ -3,6 +3,6 @@ import autocompleteModel from './models/autocomplete-model.js';
 import './scss/autocomplete-style.scss';
 
 let viewAutocomplete = new autocompleteView({
-    model: new autocompleteModel(),
+    model: autocompleteModel,
     el: '#main-wrap'
 });
