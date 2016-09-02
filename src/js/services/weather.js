@@ -1,7 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
-import _ from 'underscore';
+import _ from 'lodash';
 import Backbone from 'backbone';
 
 const WEATHER_API = 'e6b2ec46c1a1424d28fd7606c38272c6';
