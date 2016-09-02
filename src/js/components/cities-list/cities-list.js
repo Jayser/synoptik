@@ -5,6 +5,7 @@ import Backbone from 'backbone';
 
 import './styles/index.scss';
 import template from './templates/index.hbs';
+import templateNoResults from './templates/no-results.hbs';
 
 import weatherService from '../../services/weather';
 import googleService from '../../services/google-geocode';
@@ -20,15 +21,15 @@ export default Backbone.View.extend({
 
     handlerWeather({ target }) {
         const { lat, lng, name } = $(target).data();
-        const url = weatherService.url();
+        const baseUrl = weatherService.url();
+        const url = `${ baseUrl }${ lat },${ lng }?units=si`;
 
         googleService.set('name', name);
-        weatherService.fetch({
-            url: `${ url }${ lat },${ lng }?units=si`
-        });
+        weatherService.fetch({ url: url });
     },
 
     render(cities) {
-        return this.$el.html(template(cities));
+        const tpl = cities.length ? template : templateNoResults;
+        return this.$el.html(tpl(cities));
     }
 });

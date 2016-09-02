@@ -36,7 +36,8 @@ export default Backbone.View.extend({
     },
 
     handlerLocation(results) {
-        this.$(this.selectors.searchContent).html(new CitiesList().render(results.toJSON().results));
+        const citiesList = new CitiesList().render(results.toJSON().results);
+        this.$(this.selectors.searchContent).html(citiesList);
     },
 
     saveWeatherToStorage(model){
@@ -51,7 +52,8 @@ export default Backbone.View.extend({
     },
 
     handlerWeather(collection){
-        this.$(this.selectors.searchContent).html(new WeatherList().render(collection));
+        const weatherList = new WeatherList().render(collection);
+        this.$(this.selectors.searchContent).html(weatherList);
     },
 
     addListeners(){
@@ -61,7 +63,8 @@ export default Backbone.View.extend({
     },
 
     initFindPlace() {
-        return this.$(this.selectors.searchContainer).html(new FindPlace().render());
+        const findPlace = new FindPlace().render();
+        return this.$(this.selectors.searchContainer).html(findPlace);
     },
 
     prePopulate() {

@@ -35,7 +35,7 @@ export default Backbone.View.extend({
     render(collection) {
         const weatherList = collection.toJSON();
         if (weatherList.length) {
-            console.log('Pre populate collection ::', weatherList);
+            console.info('Pre populate collection ::', weatherList);
             $(this.selectors.weatherContent).html(this.$el.html(template(weatherList)));
             this.initIcon(weatherList);
         }
