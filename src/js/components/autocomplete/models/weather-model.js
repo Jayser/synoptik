@@ -25,6 +25,6 @@ const ModelWeather = Backbone.Model.extend({
         this.saveData(response);
         return response;
     }
-})
+});
 
 export default new ModelWeather(); 

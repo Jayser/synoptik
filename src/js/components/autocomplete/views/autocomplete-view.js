@@ -4,6 +4,8 @@ import _ from 'underscore';
 import template from '../templates/autocomplete.hbs';
 import modelWeather from '../models/weather-model.js'
 import autocompleteWeather from '../models/autocomplete-model.js'
+import ListItemModel from '../../autocompleteList/models/list-item-model.js'
+import ListItemView from '../../autocompleteList/views/list-item-view.js'
 
 export default Backbone.View.extend({
     getWeather (lat, lng) {
@@ -22,9 +24,9 @@ export default Backbone.View.extend({
         }
 
         _.each(results, (item) => {
-            resultList += `<li>
-                ${item.formatted_address}
-            </li>`;
+            resultList += new ListItemView ({
+                model: new ListItemModel(item)
+            }).render();
         });
         this.$el.find('.search-list').html(resultList);
     },
