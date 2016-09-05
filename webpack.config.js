@@ -3,10 +3,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebPackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const  NODE_ENV = process.env.NODE_ENV || 'develop';
+const NODE_ENV = process.env.NODE_ENV || 'develop';
 
 module.exports = {
     context: path.join(__dirname, 'src'),
@@ -14,7 +14,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'build'),
         publicPath: '/build/',
-        filename: 'js/[name].js'
+        filename: 'js/[name].[hash].js'
     },
     devtool: "eval",
     module: {
@@ -43,11 +43,11 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]"
+                loader: "url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[hash:6].[ext]"
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file?name=./fonts/[name].[ext]"
+                loader: "file?name=./fonts/[name].[hash:6].[ext]"
             }
         ]
     },
@@ -55,8 +55,11 @@ module.exports = {
         new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['build'], {root: __dirname}),
-        new CopyWebPackPlugin([{from: './index.html'}]),
-        new ExtractTextPlugin("./css/main.css", { allChunks: true })
+        new ExtractTextPlugin("./css/[name].[contenthash].css", { allChunks: true }),
+        new HtmlWebpackPlugin({
+            title: 'Synoptik',
+            template: 'index.html'
+        })
     ],
     devServer: {
         port: 3001,
