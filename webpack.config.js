@@ -1,14 +1,19 @@
 'use strict';
 
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const  NODE_ENV = process.env.NODE_ENV || 'develop';
+
 module.exports = {
-    entry: './src/js/main.js',
+    context: path.join(__dirname, 'src'),
+    entry: './js/main.js',
     output: {
-        path: './build',
+        path: path.join(__dirname, 'build'),
+        publicPath: '/build/',
         filename: 'js/[name].js'
     },
     devtool: "eval",
@@ -16,18 +21,19 @@ module.exports = {
         preLoaders: [
             {
                 test: /\.js$/,
-                loader: 'eslint',
-                exclude: /node_modules/
+                include: /src/,
+                loader: 'eslint'
             }
         ],
         loaders: [
             {
                 test: /\.hbs$/,
+                include: /src/,
                 loader: "handlebars-loader"
             },
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                include: /src/,
                 loader: 'babel'
             },
             {
@@ -37,19 +43,20 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name].[ext]"
+                loader: "url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]"
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file-loader?name=fonts/[name].[ext]"
+                loader: "file?name=./fonts/[name].[ext]"
             }
         ]
     },
     plugins: [
+        new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['build'], {root: __dirname}),
-        new CopyWebPackPlugin([{from: 'src/index.html'}]),
-        new ExtractTextPlugin("main.css")
+        new CopyWebPackPlugin([{from: './index.html'}]),
+        new ExtractTextPlugin("./css/main.css", { allChunks: true })
     ],
     devServer: {
         port: 3001,

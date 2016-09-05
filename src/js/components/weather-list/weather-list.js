@@ -1,7 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
-import _ from 'lodash';
+import each from 'lodash/each';
 import Backbone from 'backbone';
 import Skycons from 'skycons';
 
@@ -24,7 +24,7 @@ export default Backbone.View.extend({
     },
 
     initIcon(collection){
-        _.each(collection, ({ icon = '', time = null }) => {
+        each(collection, ({ icon = '', time = null }) => {
             const iconName = `${icon}-${time}`;
             const iconType = this.SkyCons[this.formatIconName(icon)];
             this.$el.append(this.skyCons.add(iconName, iconType));

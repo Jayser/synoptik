@@ -1,7 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
-import _ from 'lodash';
+import extend from 'lodash/extend';
 import Backbone from 'backbone';
 
 const WEATHER_API = 'e6b2ec46c1a1424d28fd7606c38272c6';
@@ -12,7 +12,7 @@ const Weather = Backbone.Model.extend({
     },
 
     sync(method, model, options) {
-        const params = _.extend({
+        const params = extend({
             dataType: 'jsonp',
             url: model.url()
         }, options);

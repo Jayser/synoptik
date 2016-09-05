@@ -1,12 +1,12 @@
 'use strict';
 
 import 'jquery';
-import _ from 'lodash';
+import trim from 'lodash/trim';
+import delay from 'lodash/delay';
 import Backbone from 'backbone';
 
 import './styles/index.scss';
 import template from './templates/index.hbs';
-import delay from '../../utils/delay'
 import googleService from '../../services/google-geocode';
 
 const MODULE_ID = 'weather-app';
@@ -20,7 +20,7 @@ export default Backbone.View.extend({
     },
 
     handlerInputLocation({ target }) {
-        const value = _.trim(target.value);
+        const value = trim(target.value);
 
         if (value) {
             delay(() => {

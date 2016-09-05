@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --display-modules",
     "watch": "webpack --colors --watch",
     "hmr": "webpack-dev-server",
     "server": "static"
