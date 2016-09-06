@@ -6,15 +6,24 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const NODE_ENV = process.env.NODE_ENV || 'develop';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const IS_DEVELOP = NODE_ENV === 'development';
+const PORT = process.env.PORT || 8080;
 
 module.exports = {
+    port: PORT,
     context: path.join(__dirname, 'src'),
-    entry: './js/main.js',
+    entry: {
+        main: [
+            'webpack-dev-server/client?http://localhost:' + PORT,
+            'webpack/hot/dev-server',
+            './js/main.js'
+        ]
+    },
     output: {
         path: path.join(__dirname, 'build'),
-        publicPath: '/build/',
-        filename: 'js/[name].[hash].js'
+        publicPath: "http://localhost:" + PORT + '/',
+        filename: 'js/[name].js?[hash]'
     },
     devtool: "eval",
     module: {
@@ -43,28 +52,28 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[hash:6].[ext]"
+                loader: "url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]?[hash]"
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file?name=./fonts/[name].[hash:6].[ext]"
+                loader: "file?name=./fonts/[name].[ext]?[hash]"
             }
         ]
     },
     plugins: [
         new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(['build'], {root: __dirname}),
-        new ExtractTextPlugin("./css/[name].[contenthash].css", { allChunks: true }),
+        new CleanWebpackPlugin(['build'], { root: __dirname }),
+        new ExtractTextPlugin("./css/[name].css?[contenthash]", { allChunks: true, disable: IS_DEVELOP }),
         new HtmlWebpackPlugin({
             title: 'Synoptik',
             template: 'index.html'
         })
     ],
-    devServer: {
+/*    devServer: {
         port: 3001,
         hot: true
-    },
+    },*/
     eslint: {
         emitErrors: true,
         reporter: function (results) {

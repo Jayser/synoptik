@@ -5,11 +5,39 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "webpack --display-modules",
     "watch": "webpack --colors --watch",
-    "server": "node server.js",
-    "test": "karma start --single-run --no-auto-watch karma.conf.js",
-    "test-watch": "karma start --auto-watch --no-single-run karma.conf.js"
+    "server": "better-npm-run server",
+    "build:dist": "better-npm-run build:dist",
+    "build:prod": "better-npm-run build:prod",
+    "test": "better-npm-run test",
+    "test:watch": "better-npm-run test"
+  },
+  "betterScripts": {
+    "server": {
+      "command": "node server.js"
+    },
+    "build:dist": {
+      "command": "webpack --display-modules"
+    },
+    "build:prod": {
+      "command": "webpack --config $npm_package_webpack --progress --colors",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8080
+      }
+    },
+    "test": {
+      "command": "karma start --single-run --no-auto-watch karma.conf.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test:watch": {
+      "command": "karma start --auto-watch --no-single-run karma.conf.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -35,6 +63,7 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
+    "better-npm-run": "0.0.11",
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.23.1",
     "eslint": "^3.3.1",

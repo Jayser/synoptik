@@ -4,14 +4,16 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
 
 new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
+    contentBase: config.output.path,
     hot: true,
+    quiet: false,
+    noInfo: false,
     historyApiFallback: true,
-    watch: true
-}).listen(5000, 'localhost', function (err) {
+    stats: { colors: true }
+}).listen(config.port, 'localhost', function (err) {
     if (err) {
         console.log(err);
     }
-    open("http://localhost:5000/build/index.html");
-    console.log('Listening at localhost:5000');
+    open("http://localhost:" + config.port + "/index.html");
+    console.log('Listening at localhost:'  + config.port);
 });
