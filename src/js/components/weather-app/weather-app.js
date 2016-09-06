@@ -14,20 +14,17 @@ import FindPlace from '../find-place/find-place';
 import WeatherList from '../weather-list/weather-list';
 import CitiesList from '../../components/cities-list/cities-list';
 
-const MODULE_ID = 'weather-app';
-
 export default Backbone.View.extend({
-    weatherStorageModel: weatherStorageService.model,
-
-    selectors: {
-        searchContainer: `.${MODULE_ID}__search`,
-        searchContent: `.${MODULE_ID}__content`
+    events: {
+        'click .weather-app__actions-clear': 'handlerClear'
     },
 
     initialize() {
         this.render();
-        this.addListeners();
         this.initFindPlace();
+        this.initCitiesList();
+        this.initWeatherList();
+        this.addListeners();
         this.prePopulate();
     },
 
@@ -35,39 +32,38 @@ export default Backbone.View.extend({
         return this.$el.html(template());
     },
 
-    handlerLocation(results) {
-        const citiesList = new CitiesList().render(results.toJSON().results);
-        this.$(this.selectors.searchContent).html(citiesList);
+    initFindPlace() {
+        return new FindPlace();
     },
 
-    saveWeatherToStorage(model){
-        const newWeatherItem = new this.weatherStorageModel(model.toJSON());
-        const name = googleService.toJSON().name;
+    initCitiesList() {
+        return new CitiesList();
+    },
 
-        newWeatherItem.set('name', name);
+    initWeatherList(){
+        return new WeatherList();
+    },
+
+    addListeners() {
+        this.listenTo(weatherService, 'sync', this.saveWeatherToStorage);
+    },
+
+    saveWeatherToStorage(model) {
+        const newWeatherItem = new weatherStorageService.model(model.toJSON());
+
+        newWeatherItem.set('name', googleService.get('name'));
         weatherStorageService.localStorage.create(newWeatherItem);
+        this.prePopulate();
+    },
 
+    prePopulate() {
         // Redraw weather list
         weatherStorageService.fetch();
     },
 
-    handlerWeather(collection){
-        const weatherList = new WeatherList().render(collection);
-        this.$(this.selectors.searchContent).html(weatherList);
-    },
-
-    addListeners(){
-        this.listenTo(googleService, 'sync', this.handlerLocation);
-        this.listenTo(weatherService, 'sync', this.saveWeatherToStorage);
-        this.listenTo(weatherStorageService, 'sync', this.handlerWeather);
-    },
-
-    initFindPlace() {
-        const findPlace = new FindPlace().render();
-        return this.$(this.selectors.searchContainer).html(findPlace);
-    },
-
-    prePopulate() {
-        weatherStorageService.fetch();
+    handlerClear() {
+        weatherStorageService.reset();
+        weatherStorageService.localStorage._clear();
+        this.prePopulate();
     }
 });

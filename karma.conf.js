@@ -1,23 +1,10 @@
 var path = require('path');
-var webpackConfig = require('./webpack.config');
 var webpack = require('karma-webpack');
-
-webpackConfig.module.loaders = [{
-    test: /\.js$/,
-    include: /test/,
-    loader: 'babel'
-}];
-webpackConfig.module.postLoaders = [{
-    test: /\.js$/,
-    include: /test/,
-    loader: 'istanbul-instrumenter'
-}];
-
-webpackConfig.devtool = 'inline-source-map';
 
 module.exports = function (config) {
     config.set({
         frameworks: ['jasmine'],
+        browsers: ['PhantomJS'],
         files: [
             './tests/**/*.spec.js'
         ],
@@ -30,20 +17,54 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-spec-reporter'
         ],
-        browsers: ['PhantomJS'],
         preprocessors: {
             'tests/**/*.spec.js': ['webpack']
         },
-        reporters: [ 'spec', 'coverage' ],
+        reporters: ['progress', 'coverage'],
+        webpack: {
+            cache: true,
+            devtool: 'inline-source-map',
+            module: {
+                preLoaders: [
+                    {
+                        test: /\.spec\.js$/,
+                        include: /tests/,
+                        exclude: /(bower_components|node_modules)/,
+                        loader: 'babel',
+                        query: {
+                            cacheDirectory: true
+                        }
+                    },
+                    {
+                        test: /\.js?$/,
+                        include: /tests/,
+                        exclude: /(node_modules|bower_components|tests)/,
+                        loader: 'babel-istanbul',
+                        query: {
+                            cacheDirectory: true
+                        }
+                    }
+                ],
+                loaders: [
+                    {
+                        test: /\.js$/,
+                        include: path.resolve(__dirname, './src'),
+                        exclude: /(bower_components|node_modules|tests)/,
+                        loader: 'babel',
+                        query: {
+                            cacheDirectory: true
+                        }
+                    }
+                ]
+            }
+        },
         coverageReporter: {
-            dir: 'build/reports/coverage',
             reporters: [
                 { type: 'html', subdir: 'report-html' },
                 { type: 'lcov', subdir: 'report-lcov' },
                 { type: 'cobertura', subdir: '.', file: 'cobertura.txt' }
             ]
         },
-        webpack: webpackConfig,
         webpackMiddleware: { noInfo: true }
-    })
+    });
 };

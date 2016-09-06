@@ -1,6 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
+import isEmpty from 'lodash/isEmpty'
 import Backbone from 'backbone';
 
 import './styles/index.scss';
@@ -13,10 +14,14 @@ import googleService from '../../services/google-geocode';
 const MODULE_ID = 'weather-app';
 
 export default Backbone.View.extend({
-    className: `${MODULE_ID}__list`,
+    el: `.${MODULE_ID}__content`,
+
+    initialize() {
+        this.listenTo(googleService, 'sync', this.handlerLocation);
+    },
 
     events: {
-        'click': 'handlerWeather'
+        'click .cities-list__item': 'handlerWeather'
     },
 
     handlerWeather({ target }) {
@@ -28,8 +33,14 @@ export default Backbone.View.extend({
         weatherService.fetch({ url: url });
     },
 
-    render(cities) {
-        const tpl = cities.length ? template : templateNoResults;
-        return this.$el.html(tpl(cities));
+    handlerLocation(model){
+        const data = model.toJSON();
+        const html = isEmpty(data.results) ? templateNoResults() : template(data.results);
+
+        this.render(html);
+    },
+
+    render(html) {
+        return this.$el.html(html);
     }
 });

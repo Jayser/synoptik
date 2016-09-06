@@ -29,7 +29,7 @@ module.exports = {
             {
                 test: /\.hbs$/,
                 include: /src/,
-                loader: "handlebars-loader"
+                loader: "handlebars"
             },
             {
                 test: /\.js$/,
