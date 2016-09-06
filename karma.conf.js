@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('karma-webpack');
+const path = require('path');
+const webpack = require('karma-webpack');
 
 module.exports = function (config) {
     config.set({
@@ -59,6 +59,7 @@ module.exports = function (config) {
             }
         },
         coverageReporter: {
+            //dir: 'build/reports/coverage',
             reporters: [
                 { type: 'html', subdir: 'report-html' },
                 { type: 'lcov', subdir: 'report-lcov' },
