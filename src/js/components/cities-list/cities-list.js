@@ -6,7 +6,7 @@ import Backbone from 'backbone';
 
 import './styles/index.scss';
 import template from './templates/index.hbs';
-import templateNoResults from './templates/no-results.hbs';
+import templateNoResults from './templates/no-results';
 
 import weatherService from '../../services/weather';
 import googleService from '../../services/google-geocode';

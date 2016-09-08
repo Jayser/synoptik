@@ -5,7 +5,7 @@ import trim from 'lodash/trim';
 import Backbone from 'backbone';
 
 import './styles/index.scss';
-import template from './templates/index.hbs';
+import template from './templates/index';
 import googleService from '../../services/google-geocode';
 import weatherStorageService from '../../services/weather-storage';
 

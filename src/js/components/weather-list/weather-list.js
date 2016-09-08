@@ -6,8 +6,8 @@ import Backbone from 'backbone';
 import Skycons from 'skycons';
 
 import './styles/weather-list.scss';
-import template from './templates/weather-list.hbs';
-import templateNoResults from './templates/no-results.hbs';
+import template from './templates/weather-list';
+import templateNoResults from './templates/no-results';
 
 import weatherStorageService from '../../services/weather-storage';
 

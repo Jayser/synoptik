@@ -4,7 +4,7 @@ import 'jquery';
 import Backbone from 'backbone';
 
 import './styles/weather-app.scss';
-import template from './templates/weather-app.hbs';
+import template from './templates/weather-app';
 
 import googleService from '../../services/google-geocode';
 import weatherService from '../../services/weather';

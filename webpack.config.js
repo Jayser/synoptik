@@ -27,6 +27,9 @@ module.exports = {
         filename: 'js/[name].js?[hash]'
     },
     devtool: "eval",
+    resolve: {
+      extensions: [ '', '.js', '.hbs' ]
+    },
     module: {
         preLoaders: [
             {
