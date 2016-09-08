@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForceCaseSensitivityPlugin = require('force-case-sensitivity-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const IS_DEVELOP = NODE_ENV === 'development';
@@ -61,6 +62,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new ForceCaseSensitivityPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['build'], { root: __dirname }),
