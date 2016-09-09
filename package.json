@@ -5,6 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "lint": "eslint ./src/**/*.js",
     "watch": "webpack --colors --watch",
     "server": "better-npm-run server",
     "build:dist": "better-npm-run build:dist",
@@ -85,10 +86,18 @@
     "node-sass": "^3.8.0",
     "open": "0.0.5",
     "phantomjs-polyfill": "0.0.2",
+    "pre-git": "^3.10.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.15.0"
+  },
+  "config": {
+    "pre-git": {
+      "pre-commit": [
+        "npm run lint"
+      ]
+    }
   }
 }
