@@ -97,7 +97,8 @@
     "pre-git": {
       "msg-pattern": "^feature\\-\\d{1,4}\\:.+",
       "pre-commit": [
-        "npm run lint"
+        "npm run lint",
+        "npm run test"
       ]
     }
   }
