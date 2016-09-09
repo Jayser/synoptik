@@ -5,5 +5,5 @@ import WeatherApp from './components/weather-app/weather-app';
 
 // Init App
 new WeatherApp({
-    el: '.main-content1'
+    el: '.main-content'
 });
