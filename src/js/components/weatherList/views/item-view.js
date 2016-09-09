@@ -10,6 +10,7 @@ export default Backbone.View.extend({
         this.render();
     },
     render () {
+        console.log('sdfsdf');
         this.$el.append(template(this.model.toJSON()));
     }
 })

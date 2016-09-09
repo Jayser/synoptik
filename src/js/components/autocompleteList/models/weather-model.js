@@ -10,8 +10,14 @@ const ModelWeather = Backbone.Model.extend({
     url () {
         return `https://api.forecast.io/forecast/${API_KEY}/`;
     },
+    setItemName (name) {
+        this.name = name;
+    },
     saveData (data) {
-        let model = new ItemWeatherModel(data);
+        let model = new ItemWeatherModel({
+            data: data,
+            name: this.name
+        });
         let store = localStore.get('weatherItems') || [];
 
         store.push(model);

@@ -2,33 +2,19 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 import _ from 'underscore';
 import template from '../templates/autocomplete.hbs';
-import modelWeather from '../models/weather-model.js'
-import autocompleteWeather from '../models/autocomplete-model.js'
-import ListItemModel from '../../autocompleteList/models/list-item-model.js'
-import ListItemView from '../../autocompleteList/views/list-item-view.js'
+import autocompleteWeather from '../models/autocomplete-model.js';
+import ListItemView from '../../autocompleteList/views/list-item-view.js';
 
 export default Backbone.View.extend({
-    getWeather (lat, lng) {
-        modelWeather.fetch({
-            url: modelWeather.getUrl(lat, lng),
-            dataType: 'jsonp'
-        })
-    },
     initAutocomplete (data) {
         let results  = data.toJSON().results;
-        let resultList = ' ';
 
         if (!results.length) {
             this.$el.find('.search-list').html('<li>Have no result !!!</li>');
             return;
         }
 
-        _.each(results, (item) => {
-            resultList += new ListItemView ({
-                model: new ListItemModel(item)
-            }).render();
-        });
-        this.$el.find('.search-list').html(resultList);
+        this.listItemView.render(results);
     },
     getCoordinates (e) {
         let val = $(e.currentTarget).val();
@@ -48,8 +34,11 @@ export default Backbone.View.extend({
     },
     initialize () {
         this.render();
-        //this.model.fetch({dataType: 'jsonp'});
+        this.initListView();
         this.setHandlers();
+    },
+    initListView () {
+        this.listItemView =  new ListItemView();
     },
     render () {
         this.$el.html(template());

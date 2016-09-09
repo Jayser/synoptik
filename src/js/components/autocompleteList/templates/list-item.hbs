@@ -1,5 +1,7 @@
-<li class="autocomplete-item">
-    <span>
-        {{formatted_address}}
-    </span>
-</li>
+{{#each data}}
+    <li class="autocomplete-item" data-lat="{{this.geometry.location.lat}}" data-lng="{{this.geometry.location.lng}}" data-name="{{this.formatted_address}}">
+        <span>
+            {{this.formatted_address}}
+        </span>
+    </li>
+{{/each}}
