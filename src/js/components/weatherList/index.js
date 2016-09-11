@@ -4,13 +4,6 @@ import localStore from 'store';
 
 let store = localStore.get('weatherItems') || [];
 
-if (store.length) {
-    collectionWeather.add(store);
-
-    collectionWeather.each((itemModel) => {
-        new itemView({
-            model: itemModel,
-            el: '#main-list'
-        });
-    });
-}
+collectionWeather.add(store);
+itemView.render(store);
+itemView.listenTo(collectionWeather, 'add', itemView.addItemToWeatherList);

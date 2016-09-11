@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
 import template from '../templates/list-item.hbs';
-import modelWeather from '../models/weather-model.js';
+import serviceWeather from '../../services/weather-service-model.js';
 
 export default Backbone.View.extend({
     el: '.search-list',
@@ -17,9 +17,9 @@ export default Backbone.View.extend({
         this.getWeather(lat, lng, name);
     },
     getWeather (lat, lng, name) {
-        modelWeather.setItemName(name);
-        modelWeather.fetch({
-            url: modelWeather.getUrl(lat, lng),
+        serviceWeather.setItemName(name);
+        serviceWeather.fetch({
+            url: serviceWeather.getUrl(lat, lng),
             dataType: 'jsonp'
         })
     },

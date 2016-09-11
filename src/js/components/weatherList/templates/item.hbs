@@ -1,4 +1,6 @@
-<div>
-    <span>{{name}}</span>
-    <span>{{data.currently.temperature}}</span>
-</div>
+{{#each data}}
+    <li>
+        <span>{{this.name}}</span><br/>
+        <span>temperature => {{this.temperature}}</span>
+    </li>
+{{/each}}

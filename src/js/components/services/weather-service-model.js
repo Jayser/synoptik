@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
-import collectionWeather from '../../store/collections/weather-collection.js'
-import ItemWeatherModel from '../../store/models/weather-item.js'
+import collectionWeather from '../store/collections/weather-collection.js'
+import ItemWeatherModel from '../store/models/weather-item.js'
 import localStore from 'store'
 
 const API_KEY = 'e6b2ec46c1a1424d28fd7606c38272c6';
@@ -15,7 +15,7 @@ const ModelWeather = Backbone.Model.extend({
     },
     saveData (data) {
         let model = new ItemWeatherModel({
-            data: data,
+            temperature: data.currently.temperature,
             name: this.name
         });
         let store = localStore.get('weatherItems') || [];
